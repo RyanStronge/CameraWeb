@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <script type="text/javascript "src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        
+    </head>
+    <body>
+        <input type="text" value="" name="count" id='count'/>
+        <input id="submitButton" type="submit" value="Take Photos">
+
+        <input type="text" value="" name="captureLength" id='captureLength'/>
+        <input id="takeVideo" type="submit" value="Take Video">
+
+        <input id="turnoff" type="submit" value="Turn  Off">
+        <input id="turnon" type="submit" value="Turn  On">
+
+        <input id="downloadAll" type="submit" value="Download All"> 
+
+        <label for="res">Choose a Resolution: </label>
+
+        <select id="resPicker" value="Select Resolution">
+            <option value="4k">4k</option>
+            <option value="2k">2k</option>
+            <option value="1440p">1440p</option>
+            <option value="1080p">1080p</option>
+            <option value="960p">960p</option>
+            <option value="720p">720p</option>
+            <option value="480p">480p</option>
+        </select>
+        
+        <input id="res" type="submit" value="Change Resolution">
+
+
+        
+
+
+        <script type="text/javascript">
+
+                $(function(){
+                    $('#submitButton').click(function(){
+                        $.ajax({
+                            url: '/takePhotos',
+                            data:{
+                                count: $('#count').val()
+                            },
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Taking "+ $('#count').val() + " pictures!")
+                        });
+                    });
+
+                    $('#takeVideo').click(function(){
+                        $.ajax({
+                            url: '/record',
+                            data:{
+                                captureLength: $('#captureLength').val()
+                            },
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Recording for "+ $('#captureLength').val() + "seconds!")
+                        });
+                    });
+
+                    $('#checkConnection').click(function(){
+                        $.ajax({
+                            url: '/checkConnection',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Checking Connection!")
+                        });
+                    });
+
+                    $('#turnoff').click(function(){
+                        $.ajax({
+                            url: '/turnoff',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Turning off...")
+                        });
+                    });
+
+                    $('#turnon').click(function(){
+                        $.ajax({
+                            url: '/turnon',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Turning on...")
+                        });
+                    });
+
+                    $('#turnon').click(function(){
+                        $.ajax({
+                            url: '/turnon',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Turning on...")
+                        });
+                    });
+
+                    $('#downloadAll').click(function(){
+                        $.ajax({
+                            url: '/downloadAll',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Downloading All to Raspberry Pi SD Card")
+                        });
+                    });
+
+                    $('#res').click(function(){
+                        $.ajax({
+                            url: '/res',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            data:{
+                                res: $('#resPicker').val()
+                            },
+                            success: alert("Changing resolution to "+$('#resPicker').val())
+                        });
+                    });
+
+                    
+                });
+    
+               
+            </script>
+    </body>
+</html>
