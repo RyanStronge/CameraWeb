@@ -7,75 +7,24 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/style.css">
         
     </head>
     <body>
 
-        <div class="row">
-            <div class="col s6">
-                <div class="card blue lighten-3">
-                    <div class="card-content white-text">
-                    <span class="card-title">Take Photos</span>
-                    <p>Input Number of Photos to Take</p>
-                    <input type="text" value="" name="count" id='count'/>
-                </div>
-                <div class="card-action">
-                    <input id="submitButton" type="submit" value="Take Photos">
-                </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col s12 m6">
-                <div class="card blue lighten-3">
-                    <div class="card-content white-text">
-                    <span class="card-title">Take Video</span>
-                    <p>Input Seconds of Video to Capture</p>
-                    <input type="text" value="" name="captureLength" id='captureLength'/>
-                </div>
-                <div class="card-action">
-                    <input id="takeVideo" type="submit" value="Take Video">
-                </div>
-            </div>
-            </div>
-        </div>
-        
-        
-        <div class="row">
-            <div class="col s12 m6">
-            <div class="card blue lighten-3">
-                <div class="card-content white-text">
-                    <span class="card-title">GoPro Control</span>
-                    <p>Turn GoPro on / off</p>
-                </div>
-                <div class="card-action">
-                    <input id="turnoff" type="submit" value="Turn  Off">
-                    <input id="turnon" type="submit" value="Turn  On">  
-                </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col s12 m6">
-            <div class="card blue lighten-3">
-                <div class="card-content white-text">
-                    <span class="card-title">Download</span>
-                </div>
-                <div class="card-action">
-                    <input id="downloadAll" type="submit" value="Download All">  
-                </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col s12 m6">
-            <div class="card blue lighten-3">
-                <div class="card-content white-text">
-                    <span class="card-title">Change Resolution</span>
+        <div class="container">
+            <div class="container__item">
+                <form class="form">
+                    <input type="text" class="form__field" placeholder="Number of Photos" value="" name="count" id='count'/>
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="submitButton">Take Photos</button>
+
+                    <input type="text" class="form__field" placeholder="Seconds of Video" value="" name="captureLength" id='captureLength'/>
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="takeVideo">Take Photos</button>
+                    <br>
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="turnOff">Turn GoPro Off</button>
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="turnOn">Turn GoPro On</button>
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="downloadAll">Download All</button>
+
                     <select id="resPicker" value="Select Resolution">
                         <option value="4k">4k</option>
                         <option value="2k">2k</option>
@@ -85,13 +34,13 @@
                         <option value="720p">720p</option>
                         <option value="480p">480p</option>
                     </select>
-                </div>
-                <div class="card-action">
-                    <input id="res" type="submit" value="Change Resolution">
-                </div>
-            </div>
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="downloadAll">Change Resolution</button>
+
+                </form>
             </div>
         </div>
+        
+      
 
         
         
