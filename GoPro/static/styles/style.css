@@ -7,15 +7,21 @@
 html,
 body,
 .container {
-  height: 100%;
+  height: 90%;
 }
 
 a {
   color: inherit;
 }
 
-a:hover {
-  color: #7f8ff4;
+
+
+#footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
 
 .container {
@@ -51,16 +57,42 @@ a:hover {
   cursor: pointer;
 }
 
+#resPicker{
+  display: inline-block;
+  background: transparent;
+  color: #7f8ff4;
+  font: inherit;
+  border: 5px;
+  outline-color:  #7f8ff4;
+  
+  border-radius: 8px;
+  padding: 5px;
+  -webkit-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+  cursor: pointer;
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+#git{
+  color: white !important;
+}
+
+#topbar{
+  background-color: #7f8ff4 !important;
+}
+
 #count, #captureLength{
   width: 40%;
   margin-left: 30%;
   margin-right: 30%;
 }
 
-#submitButton, #takeVideo{
-  width:60%;
-  margin-left: 20%;
-  margin-right: 20%;
+#submitButton, #takeVideo, #res{
+  width:40%;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 
