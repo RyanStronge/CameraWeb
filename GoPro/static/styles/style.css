@@ -44,12 +44,30 @@ a:hover {
   color: inherit;
   font: inherit;
   border: 0;
-  outline: 0;
-  padding: 0;
+  border-radius: 8px;
+  padding: 5px;
   -webkit-transition: all 200ms ease-in;
   transition: all 200ms ease-in;
   cursor: pointer;
 }
+
+#count, #captureLength{
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+#submitButton, #takeVideo{
+  width:60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+
+
+
+
+
 
 .btn--primary {
   background: #7f8ff4;
@@ -71,7 +89,7 @@ a:hover {
 }
 
 .btn--inside {
-  margin-left: -96px;
+  
 }
 
 .form__field {
