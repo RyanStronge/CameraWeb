@@ -1,0 +1,28 @@
+<html>
+    <head>  
+        <title>{{error}}</title>  
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/errorstyle.css')}}">
+    </head>
+
+    <body>
+       <h1>{{error}}</h1>
+       <a href="picam" id="picam"><button type="button" class="btn btn--primary btn--inside uppercase" id="picam">PiCam</button></a>
+        <a href="/" id="gopro"><button type="button" class="btn btn--primary btn--inside uppercase" id="gopro">GoPro</button></a>
+
+    </body>
+
+    <script type="text/javascript">
+
+        $(function(){
+            $('#picam').click(function(){
+                $.ajax({
+                    url: 'picam',
+                    dataType: 'JSON',
+                    type: 'GET',
+                });
+            });          
+        });
+
+       
+    </script>
+</html>

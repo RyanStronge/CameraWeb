@@ -1,6 +1,7 @@
 import os
 import pyautogui as wr
 import paramiko as pm
+import time
 
 client = pm.SSHClient()
 
@@ -19,10 +20,20 @@ def checkConnection():
     if client.get_transport() is not None:
         print("Connected.")
         return True
-    print("Check GoPro Conection! Current WiFi network is: ")
-    stdin, stdout, stderr = client.exec_command('iwgetid')
-    print(stdout)
-    return False
+    else:
+        return False
+
+def checkGPConnection():
+        print("connection ok")
+        chan = client.invoke_shell()
+        chan.sendall('iwgetid\r\n')
+        time.sleep(0.9)
+        output = chan.recv(4096)
+        print(output)
+        if "RoboticArmGoPro" in str(output):
+            print("GoPro network is: "+ str(output))
+            return True
+        return False
 
 def turnOff():
     if checkConnection():
@@ -42,6 +53,15 @@ def turnOn():
     else:
         print("Please Connect First!")
     
+
+def stream(quality, ip):
+    if checkConnection():
+        command = 'cd /boot; pwd; sudo -E python3 stream.py '+quality + ' '+ip
+        print(command)
+        client.exec_command(command)
+        print("Running")
+    else:
+        print("Please Connect First!")
 
 def takePhotos(captureCount):
     if checkConnection():

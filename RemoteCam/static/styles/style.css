@@ -57,7 +57,7 @@ a {
   cursor: pointer;
 }
 
-#resPicker{
+#resPicker, #quality{
   display: inline-block;
   background: transparent;
   color: #7f8ff4;
@@ -83,16 +83,28 @@ a {
   background-color: #7f8ff4 !important;
 }
 
-#count, #captureLength{
+#count, #captureLength, #submitButton, #takeVideo, #res, #stream{
   width: 40%;
   margin-left: 30%;
   margin-right: 30%;
 }
 
-#submitButton, #takeVideo, #res{
-  width:40%;
+#PsubmitButton, #Pcount{
+  width: 40%;
   margin-left: 30%;
+
+  display: inline-block;
+}
+
+#PtakeVideo, #PcaptureLength{
+  width: 40%;
   margin-right: 30%;
+  display: inline-block;
+}
+
+
+#live{
+  margin-top: 100px;
 }
 
 
