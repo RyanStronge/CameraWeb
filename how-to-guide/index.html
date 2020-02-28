@@ -1,0 +1,181 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Robotic Arm Photogrammetry Project</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      		<div class="wrapAll clearfix">
+			<div class="sidebar">
+				<div class="logo">
+					<a href="/"><img src='img/logo.jpeg' alt="logo"></a>
+
+				</div>
+				
+			</div>
+			<div class="mainsection">
+				
+				
+				
+				<div class="article">
+					<h1>Robotic Arm Photogrammetry How-To</h1>
+					<p class="siteSub">by Ryan Stronge</p>
+					
+					<!-- <div class="articleRight">
+						<div class="articleRightInner">
+							<img src="img/pencil.jpg" alt="robotic arm" />
+						</div>
+						The robotic arm used for the project
+					</div> -->
+					<p> This project is part of my coursework for the Computer Science Challenges module (CSC1028).</p>
+					<p>The goal for my project is to use a robotic arm which has already been developed and attach cameras in order to digitally recreate real-life objects using photogrammetry software.</p>
+					<p>The robotic arm was developed by Ryan McGovern and Ryan McCartney in the IoT lab in the CSB.</p>
+					<div class="contentsPanel">
+						<div class="contentsHeader">Contents</div>
+						<ul>
+							<li>
+								<span>1</span><a href="#">How-To Guide</a>
+								<ul>
+									<li><span>1.1</span><a href="#softwareNeeded">Software Needed / Prerequisites</a> </li>
+									<li><span>1.2</span><a href="#setupEnvironment">Setup Environment</a> </li>
+									<li><span>1.3</span><a href="#connect">Connecting to Robotic Arm</a></li>
+									<li><span>1.4</span><a href="#commands">Web Interface Commands </a></li>
+									<li><span>1.5</span><a href="#demos">Running Demos</a></li>							
+									<li><span>1.6</span><a href="#kinematics">Using Kinematics</a></li>							
+									<li><span>1.7</span><a href="#writeDemo">Writing a demo</a></li>							
+								</ul>
+							</li>
+						
+						</ul>
+					</div>
+					<h2 id="softwareNeeded">Software Needed / Prerequisites</h2>
+					<h3>Visual Studio Code</h3>
+					<p>Visual Studio Code is going to be used to write the code for this project. I picked VS Code because I feel that it's the best option due to the use of plugins for it such as easy to install linters and also the use of workspaces.</p>
+					<a href="https://code.visualstudio.com/">You can download it here.</a>
+					<h3>Python</h3>
+					<p>This project is written in Python version 2.7. Download the .exe setup file and run it to install Python.</p>
+					<a href="https://www.python.org/downloads/">You can download it here.</a>
+					<h3>Anaconda</h3>
+					<p>We use Anaconda in this project to help set up our environment so that all the componenets we need are easy to install. We can easily select the environment we need through VSCode, but I'll show how to do this later.</p>
+					<p>You should download it for python version 2.7 here, but it doesn't really matter. If you have Python version 3.8 installed, you can download it for 3.8 and it will still work the same.</p>
+					<a href="https://www.anaconda.com/distribution/">You can download it here.</a>
+					<h3>The GitHub Project</h3>
+					<p>This is the initial project on GitHub which you can download to run and control the robotic arm.</p>
+					<a href="https://github.com/makerspacequb/roboticArm">You can download it here.</a>
+					<h3>Angry IP Scanner</h3>
+					<p>This will be used to allow us to see the robotic arm on the network whenever it is powered on and we're connected to the Makerspace WiFi</p>
+					<a href="https://angryip.org/download">You can download it here.</a>
+
+					<h2 id="setupEnvironment">Setup Environment</h2>
+					<h3>Installing the anaconda environment</h3>
+					<p>1. Ensure you have the Anaconda software downloaded and installed. If not, you can get it <a href="https://anaconda.com/distribution">here.</a></p>
+					<p>2. Open <strong>Anaconda Navigator</strong> and navigate to the <strong>Environments</strong> tab.</p>
+					<p>3. From here, click <strong>Import</strong> and select the .yml file located in the environment folder of the downloaded GitHub folder.</p>
+					<p>4. If you are using MacOS, the above .yml file won't work, however here is one that will work and the robotic arm will still work the same, you can download it <a href="https://gofile.io/?c=HNutTx">Here</a></p>
+					<h3>Using the Environment in VSCode</h3>
+					<p>At the bottom-left corner of VSCode, you should see the name of your interpreter such as Python 2.7 64-bit </p>
+					<p>Click this and it will open a list of all interpreters which you can select and choose the one that has the name of the environment that you just imported eg. Python 2.7 64-bit base:'roboticArm'</p>
+					<p><strong>If it does not show, try re-opening VSCode or going into a console / terminal and typing <br>conda activate roboticArm</strong></p>
+
+					<h2 id="connect">Connect to Robotic Arm</h2>
+					<h3>Finding IP of Robotic Arm</h3>
+					<p>1. Open Angry IP Scanner (from last section)</p>
+					<p>2. Click the 'Start' button</p>
+					<p>3. Whenever it has finished scanning, scroll down until you find a network entitled 'roboticArm'</p>
+					<p>4. Beside this, there should be the IP needed to connect to the robotic arm. In order to use the demos etc. through VSCode, you'll need to go into the config.json file in the config folder and change the IP at the top to this IP of the robotic arm.</p>
+					<strong>If you can't see roboticArm on Angry IP Scanner, ensure you're connected to the Makerspace WiFi.</strong>
+
+					<h3>Using the Web Interface</h3>
+					<p>With the IP from the previous section, open a browser and enter this IP. This should allow you to see a command line to enter commands as well as a the logs of the robotic arm.</p>
+					<p>In order to ensure that the web interface and robotic arm are working correctly, enter <strong>ca</strong> into the command line and click the 'Send' button.</p>
+					<p>This should calibrate the robotic arm so it's ready to be controlled with other commands.</p>
+					<p>You can also do a number of other functions from the web interface such as downloading the logs as a .csv file from the bottom of the webpage, running demos by clicking the 'Demos' button, ensuring the robotic arm is connecting by clicking the 'Connect' button and clearing the logs by clicking the 'Clear Logs' button. </p>
+					<p>I'll go over all commands that can be used in the web interface later in the guide.</p>
+					
+					<h2 id="commands">Web Interface Commands</h2>
+					<h3>Controlling Speed</h3>
+					<p><strong>Setting Speed</strong> - s(joint)(speed) <br>Joint is between 0 and 5, Speed is in degrees per second eg. s010</br></p>
+					<p><strong>Setting Minimum Speed</strong> - d(joint)(speed) <br>Joint is between 0 and 5, Speed is in degrees per second eg.s05</p>
+					<h3>Calibrating Arm</h3>
+					<p><strong>Calibrate All Joints</strong> - ca <br>Calibrates all joints (0, 1, 2, 3, 4 and 5)</p>
+					<p><strong>Calibrating a Single Joint</strong> - c(joint) <br> Joint is between 0 and 5 eg. c5</p>
+					<h3>Other</h3>
+					<p><strong>Emergency Stop Arm</strong> - q  <br> Makes arm emergency stop </p>
+					<p><strong>Reset Arm</strong> - r <br> To be used after arm has been emergency stopped by physical button</p>
+					<p><strong>Check Connection</strong> - test <br> Tests the arm is still connected</p>
+			
+					<h2 id="demos">Run Demos</h2>
+					<h3>From the HTTP Interface</h3>
+					<p>In order to run the robotic arm from the web interface, firstly ensure you can access the web interface as shown <a href="#connect">here.</a></p>
+					<p>From here, click the <strong>demos</strong> button from the top of the webpage. This should take you to a list of the demos.</p>
+					<p>In order to run any demo, click <strong>Run Demo</strong>, in order to stop a demo, click <strong>Stop Demo</strong></p>
+					<h3>From the Python Files</h3>
+					<p>Firstly, you need to ensure that the IP address is set up correctly in the config file. To find the IP address use <a href="#connect">this.</a></p>
+					<p>Once you have the IP, go into the <strong>config.json</strong> file located in the config folder and change the <strong>ipAddress</strong> field on line 2 to the IP address of the robotic arm.</p>			
+					<p>Now, in order to run a demo, access the <strong>demos</strong> folder and run any demo using an IDE such as VSCode</p>		
+
+					<h2 id="kinematics">Using Kinematics</h2>
+					<p>For all of these, you need to include <strong>from kinematics import Kinematic</strong> at the top of the file.</p>
+					<h3>Forward Kinematics</h3>
+					<p>Forward kinematics is where the user can input a series of joint positions and the each joint of the robotic arm will move to these positions.</p>
+					<p>For an example of this, you can see the <strong>testForwardKinematics</strong> file in <strong>tests/kinematicsTests</strong> folder of the GitHub project.</p>
+					<p>The way it works is by creating an array of joint positions such as <strong>joint_positions = [0.01,-90,(90-90),0.01,0.01,(0.01+180)]</strong> in the format of <strong>[joint0, joint1, joint2, joint3, joint4, joint5]</strong></p>
+					<p>Then, to make the robotic arm go to these positions, you can use <strong>kin.forwardKinematics(joint_positions)</strong>, where <strong>kin</strong> is an instance of <strong>Kinematic()</strong></p>
+					<h3>Inverse Kinematics</h3>
+					<p>Inverse kinematics is where the user can input a series of angles (X,Y,Z, Yaw, Pitch, Roll) and the arm will move to these positions.</p>
+					<p>For an example of this, you can see the <strong>testInverseKinematics</strong> file in <strong>tests/kinematicsTests</strong> folder of the GitHub project.</p>
+					<p>You need to create two arrays for this, an array of the current pose of the arm along with an array of the desired pose of the arm in the format of <strong>[X,Y,Z,Yaw,Pitch,Roll]</strong></p>
+					<p>For example, the current pose array may be <strong>current_joints = [30, 90, 90, 30, -30, 30]</strong> and the desired pose may be <strong>desired_pose = [14.65766456, 43.51281973, 317.0026196, -163.0643134, 14.87094445, 106.9356866]</strong> </p>
+					<p>Then, to make the robotic arm go to these positions, you can use <strong>kin.inverseKinematics(desired_pose, current_joints)</strong>, where <strong>kin</strong> is an instance of <strong>Kinematic()</strong></p>
+					<h3>Moving Specific Joints with Physical Kinematics</h3>
+					<p>For an example of this, you can see the <strong>testKinematicPhysical</strong> file in <strong>tests/kinematicsTests</strong> folder of the GitHub project.</p>
+					<p>Firstly, create an array of joint angles such as <strong>kin_angles = [-0.02 ,-90.01, 90.01, 0.02, 89.9, -0.02]</strong></p>
+					<p>Next, these angles need to be checked to ensure they are within the model ranges by using <strong>result = kin.check_limits(kin_angles)</strong>. This will return either 1 if they are in the range.</p>
+					<p>Now, within an if statement of <strong>if result==1</strong>, convert the angles array to native machine joint angles using <strong>cj = kin.kin2native_angles(kin_angles)</strong></p>
+					<p>Finally, after checking the arm is connected by using <strong>while arm.connected:</strong>, you can move any joint by using arm.moveJointTo(0,cj[0]), which moves the first joint to the first element in the array. <br>The syntax for this is <strong>arm.moveJointTo(jointNumber, positionInArray)</strong></p>
+					<p>This is where <strong>arm</strong> is an instance of <strong>Arm()</strong> and <strong>kin</strong> is an instance of <strong>Kinematic()</strong></p>
+
+					<h2 id="writeDemo">Writing a Demo</h2>
+					<p><strong>Every demo should contain the following structure: </strong><br><code>
+						import sys<br>
+						sys.path.append('control/')<br>
+						from arm import Arm<br>
+						import time<br>
+						import json<br>
+
+						global config<br>
+
+						#Clear Log File<br>
+						open('logs/log.txt', 'w').close()<br>
+
+						with open('config/config.json') as json_file:  <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;config = json.load(json_file)<br>
+
+						#Create instance of Arm class<br>
+						arm = Arm(config)<br>
+						arm.resetArduino()<br>
+
+						arm.calibrateArm()<br>
+
+						while((not arm.armCalibrated()) or(arm.checkMovement())):<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;time.sleep(1)<br>
+
+						while arm.connected:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;<strong>CODE HERE</strong><br>
+						arm.stop()<br>
+					</code>
+					<p>In the section under <strong>while arm.connected</strong>, this should contain what you want the robotic arm to do whether it be using kinematics or any of the other methods in the Arm class.</p>
+
+			</div>		
+		</div>
+		
+		
+        
+
+
+    </body>
+</html>

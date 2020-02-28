@@ -1,0 +1,262 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Robotic Arm Photogrammetry Project</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      		<div class="wrapAll clearfix">
+			<div class="sidebar">
+				<div class="logo">
+					<a href="/"><img src='img/logo.jpeg' alt="logo"></a>
+
+				</div>
+				
+			</div>
+			<div class="mainsection">
+				
+				
+				
+				<div class="article">
+					<h1>Remote Control GoPro How-To</h1>
+					<p class="siteSub">by Ryan Stronge</p>
+					
+					<!-- <div class="articleRight">
+						<div class="articleRightInner">
+							<img src="img/pencil.jpg" alt="robotic arm" />
+						</div>
+						The robotic arm used for the project
+					</div> -->
+					<p> This project is part of my coursework for the Computer Science Challenges module (CSC1028).</p>
+					<p>The goal for my project is to use a robotic arm which has already been developed and attach cameras in order to digitally recreate real-life objects using photogrammetry software.</p>
+					<p>This part of the project is to remotely control the GoPro which is attached to the end effector of the robotic arm.</p>
+					<div class="contentsPanel">
+						<div class="contentsHeader">Contents</div>
+						<ul>
+							<li>
+								<span>1</span><a href="#">How-To Guide</a>
+								<ul>
+									<li><span>1.1</span><a href="#softwareNeeded">Prerequisites</a> </li>
+									<li><span>1.2</span><a href="#setup">Hardware Setup</a> </li>
+									<li><span>1.3</span><a href="#connect">Setting up the Raspberry Pi's</a></li>
+									<li><span>1.4</span><a href="#ssh">SSH into Raspberry Pi Zero</a></li>
+									<li><span>1.5</span><a href="#python">Creating a Python File to Control GoPro</a></li>							
+									<li><span>1.6</span><a href="#gpf">GoProCam Functions</a></li>							
+									<li><span>1.7</span><a href="#web">Web Interface</a></li>							
+								</ul>
+							</li>
+						
+						</ul>
+					</div>
+					
+					<h2 id="softwareNeeded">Prerequisites</h2>
+					<h3>Visual Studio Code</h3>
+					<p>Visual Studio Code is going to be used to write the code for this project. I picked VS Code because I feel that it's the best option due to the use of plugins for it such as easy to install linters and also the use of workspaces.</p>
+					<a href="https://code.visualstudio.com/">You can download it here.</a>
+					<h3>Python</h3>
+					<p>This project is written in Python version 3.8. Download the .exe setup file and run it to install Python.</p>
+					<a href="https://www.python.org/downloads/">You can download it here.</a>
+					<h3>The GitHub Project</h3>
+					<p>This is the project on GitHub which you can download to run and control the GoPro and run the web server.</p>
+					<a href="https://github.com/makerspacequb/roboticArm">You can download it here.</a>
+					<h3>Angry IP Scanner</h3>
+					<p>This will be used to allow us to see the web server on the network whenever it is powered on and we're connected to the WiFi that the web server is being hosted on.</p>
+					<a href="https://angryip.org/download">You can download it here.</a>
+					<h3>Raspbian OS</h3>
+					<p>This will be the OS used for the two raspberry pi's. On the Raspberry Pi Zero, 'Raspbian Lite' should be used and on the Raspberry Pi 3B, 'Raspbian Buster' should be used.</p>
+					<a href="https://www.raspberrypi.org/downloads/raspbian/">You can download it here.</a>
+					<h3>Balena Etcher</h3>
+					<p>Balena Etcher will be used to allow us to write disk images to the SD cards</p>
+					<a href="http://balena.io/etcher/">You can download it here.</a>
+
+					<h2 id="setup">Hardware Setup</h2>
+					<h3>Raspberry Pi 3B</h3>
+					<p>The Raspberry Pi 3B is the machine that is hosting the web server itself. It is connected to peripherals such as a monitor, keyboard and mouse as well as connected to the network via Ethernet, however you can connect to the network using Wi-Fi if you prefer. Finally, it is connected via a DATA micro USB cable to the Raspberry Pi Zero to allow for SSH. If SSH fails via USB, ensure that the micro USB cable being used can be used to transfer data, and not just power.</p>
+					<h3>Raspberry Pi Zero WH</h3>
+					<p>The Raspberry Pi Zero is the machine that is going to be connected to the GoPro. I need to use a raspberry pi zero since it has the ability to be SSH'd into via USB. I chose the WH version as it has Wi-Fi capability with a pre-soldered header. It's powered by the micro USB cable from the Pi 3B into the Pi Zero <strong>into the micro USB port on the Pi Zero labelled 'USB'</strong></p>
+					<h3>GoPro Hero 4 or Above</h3>
+					<p>A GoPro Hero 4 can be used for this project for all functionality to work, however a GoPro Hero 3 can also be used, however all functionalit may not work correctly.</p>
+					<h3>Micro SD Card (x2)</h3>
+					<p>Two Micro SD Cards are needed, one for the Pi 3B and another for the Pi Zero. They should at least be 16GB in size.</p>
+					<h3>Micro SD Card Reader</h3>
+					<p>A micro SD card reader is needed to allow the disk images to be written to the SD cards to boot Raspian on the machines </p>
+
+					<h2 id="pisetup">Setting up the Raspberry Pi's</h2>
+					<h3>Raspberry Pi 3B</h3>
+					<p>To set up the Pi 3B, you'll need to flash 'Raspbian Buster' to the SD card using the Balena Etcher software. To do this:</p>
+					<p><strong>1. </strong>Select the image you downloaded from the raspberry pi website by clicking the 'Select Image' button</p>
+					<p><strong>2. </strong>Select the SD card / SD card reader from the list of targets. You can easily tell as it is normally the only SD card that shows in the selection menu.</p>
+					<p><strong>3. </strong>Click the FLASH button and wait for it to reach 100%. When it is flashing, do not remove the SD card or close the software.</p>
+					<p>Once the disk-image has been flashed to the SD card, remove it from the machine and insert it into the Raspberry Pi 3B</p>
+					<p>Then, plug in the monitor, keyboard, mouse and power (micro USB) into the Pi 3B and wait until it has booted up into the OS. You'll need to follow some on-screen setup instructions. If it asks for a username and password, the defualt username is <strong>pi</strong> and the default password is <strong>raspberry</strong></p>
+					<p>Once it has been set up, ensure python3 is installed by opening <strong>TERMINAL</strong> and typing in the command <strong>python3 --version</strong>. If the output is in the format <strong>3.x.x</strong> such as 3.8.1, python3 is installed. If there is an error, you can install python3 using <a href="http://knight-of-pi.org/installing-python3-6-on-a-raspberry-pi/">this guide</a>.</p>
+					<p>You'll also need to install pip by typing the command <strong>sudo apt-get python3-pip</strong> in the <strong>terminal</strong>.</p>
+					<p>We need <strong>sshpass</strong> to ssh into the pi zero, to do this once again, in the terminal, input the command <strong>sudo apt-get install sshpass</strong>.</p>
+					<p>To host a web server, we need to install <strong>Flask</strong> to do this, input the command <strong>pip3 install  Flask</strong> into the terminal.</p>
+					<p>To execute SSH commands from python, we need <strong>paramiko</strong>. To install this, input <strong>pip3 install paramiko</strong></p>
+					<p>Finally, we need <strong>goprocam</strong> to interact with the GoPro. To do this, use the command <strong>pip3 install goprocam</strong> into the terminal.</p>
+
+
+					<h3>Raspberry Pi Zero</h3>
+					<p>To set up the Pi Zero, you'll need to flash 'Raspbian Lite' to the SD card using the Balena Etcher software. To do this:</p>
+					<p><strong>1. </strong>Select the image you downloaded from the raspberry pi website by clicking the 'Select Image' button</p>
+					<p><strong>2. </strong>Select the SD card / SD card reader from the list of targets. You can easily tell as it is normally the only SD card that shows in the selection menu.</p>
+					<p><strong>3. </strong>Click the FLASH button and wait for it to reach 100%. When it is flashing, do not remove the SD card or close the software.</p>
+					<p>Once the disk-image has been flashed to the SD card, remove it from the machine and insert it into the Raspberry Pi Zero</p>
+					<p>Then, plug the micro USB cable in from the Raspberry Pi 3B to the micro USB port labelled 'USB' on the Pi Zero.</p>
+					<p>Once it has been set up, you need to remove the SD card from the pi Zero and plug it back into a micro SD card reader. Once you can access the contents of the SD card which should be labelled <strong>BOOT</strong>, you need to enable SSH using <a href="https://www.thepolyglotdeveloper.com/2016/06/connect-raspberry-pi-zero-usb-cable-ssh/">this guide</a>.</p>
+					<p>Once SSH has been enabled, plug the Pi Zero and SD card back in and wait for it to be booted up.</p>
+					<p>Now, to SSH into the Pi Zero to install packages, open the terminal of the Raspberry Pi 3B and type in the command <strong>sshpass -p raspberry pi@raspberrypi.local</strong> </p>
+					<p>WiFi is also going to be needed to be activated and connected to a network on the Pi Zero to allow us to install the necessary packages. You can connect to a Wi-Fi network using <a href="https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md">this guide</a>.</p>
+					<p>Once it has been set up, ensure python3 is installed by typing in the command <strong>python3 --version</strong>. If the output is in the format <strong>3.x.x</strong> such as 3.8.1, python3 is installed. If there is an error, you can install python3 using <a href="http://knight-of-pi.org/installing-python3-6-on-a-raspberry-pi/">this guide</a>.</p>
+					<p>You'll also need to install pip by typing the command <strong>sudo apt-get python3-pip</strong> in the <strong>command line</strong>.</p>
+					<p>Finally, we need <strong>goprocam</strong> to interact with the GoPro. To do this, use the command <strong>pip3 install goprocam</strong> into the command line.</p>
+
+					<h2>Connecting to GoPro's WiFi</h2>
+					<p>To connect to the GoPro's Wi-Fi, if it's new, you'll have to download the GoPro app on Android or iOS and set it up. A guide to do that is <a href="https://gopro.com/help/articles/block/How-to-Pair-the-Camera-with-the-GoPro-App">here</a>.</p>
+					<p>When set up, turn on the GoPro and turn on it's WiFi by holding down the left hand button until the blue light flashes on and a Wi-Fi logo appears in the bottom-right corner.</p>
+					<p>To connect the Pi Zero to the GoPro's WiFi, refer to <a href="https://gopro.com/help/articles/block/How-to-Pair-the-Camera-with-the-GoPro-App">this guide</a>.</p>
+
+					<h2 id="ssh">SSH into Raspberry Pi Zero</h2>
+					<h3>Via Command Line</h3>
+					<p>In order to SSH into the Pi Zero from the Pi 3B, you can use sshpass with the command <strong>sshpass -p raspberry pi@raspberrypi.local</strong>.</p>
+					<p><strong>-p raspberry</strong> is the password that is used to ssh into the pi zero.</p>
+					<p><strong>pi</strong> is the username of the Pi Zero.</p>
+					<p><strong>raspberrypi</strong> is the host name of the Pi Zero. If you change the hostname of the pi zero, this part will change to the new hostname.</p>
+					<p><strong>.local</strong> indicates that it is connected via USB.</p>
+
+					<h3>Via Python Script</h3>
+					<p>To SSH into the Pi Zero, we need to use <strong>paramiko</strong>.</p>
+					<p>You can use this code to SSH into the Pi Zero: </p>
+					<code>
+						import paramiko as pm<br>
+
+						client = pm.SSHClient()<br>
+
+
+						def connect(user, host, password):<br>
+						&nbsp;try:<br>
+						&nbsp;&nbsp;client.set_missing_host_key_policy(pm.AutoAddPolicy())<br>
+						&nbsp;&nbsp;client.connect(host, port=22, username=user, password=password)<br>
+						&nbsp;&nbsp;if client.get_transport() is not None:<br>
+						&nbsp;&nbsp;&nbsp;print("Successfully Conected!")<br>
+						&nbsp;except:<br>
+						&nbsp;&nbsp;print("Connection Failed!")
+					</code>
+					<p>For example, you can call the command using <strong>connect(pi, raspberrypi.local, raspberry)</strong></p>
+					<p>You can check if the connection was successful using the line: <code>if client.get_transported() is not None: <br> &nbsp;return True </code></p>
+
+					<h3>Running Python Files</h3>
+					<p>To execute any terminal command, such as running a turnOff.py file that is stored in the location /boot, you can use: </p>
+					<code>command = 'cd /boot; pwd; sudo -E python3 turnOff.py'<br>
+						client.exec_command(command)</code>
+					
+					<h2 id="python">Creating a Python File to Control GoPro</h2>
+					<h3>Creating the File</h3>
+					<p><strong>1. </strong>SSH into the Pi Zero from the Pi 3B as explain above</p>
+					<p><strong>2. </strong>After SSHing into the Pi Zero, navigate to the boot directory using the commmand <code>cd /boot</code></p>
+					<p><strong>3. </strong>Once in the boot directory, create a python file using the command <code>sudo nano takePhotos.py</code>For example to make a file to take photos with the GoPro.</p>
+					<p><strong>4. </strong>This should open up a text editor and you can input the code:</p> <code>
+						import os<br>
+						import sys<br>
+						from goprocam import GoProCamera, constants<br>
+
+						count = sys.argv[1]<br>
+						gp = GoProCamera.GoPro()<br>
+						for x in range(int(count)):<br>
+						&nbsp;gp.take_photo(0)<br>
+						print(count + " photos have been taken!")<br>
+					</code><p>Where count is the number of photos the user wishes to take.</p>
+
+					<h3>Running the File via SSH</h3>
+					<p>To run this file using SSH, use the guide above entitled <strong>Running Python Files</strong> and place the parameter at the end of the command such as: </p>
+					<code>command = 'cd /boot; pwd; sudo -E python3 takePhotos.py 5'<br>
+						client.exec_command(command)</code>
+					<p>This indicates that user wants to GoPro to take 5 photos.</p>
+
+					<strong>Other functions of the GoPro can be controlled using this method. All the commands and documentation of the GoPro API can be found <a href="https://pypi.org/project/goprocam/3.0.0/">here</a>.</strong>
+					
+					
+					<h2 id="gpf">GoProCam Functions</h2>
+					<p>I'll go over some of the common functions in the goprocam API that I used in my project.</p>
+					<p>Before I start, <strong> sys.argv[1] </strong>is very useful to allow the user to input a parameter from the command line such as the number of photos the user wishes to take used in the example above eg. <strong>python3 takePhotos.py 5</strong>, where 5 is the number of photos.</p>
+					<h3>Take Photos</h3>
+					<code>
+						import os<br>
+						import sys<br>
+						from goprocam import GoProCamera, constants<br>
+
+						count = sys.argv[1]<br>
+						gp = GoProCamera.GoPro()<br>
+						for x in range(int(count)):<br>
+						&nbsp;gp.take_photo(0)<br>
+						print(count + " photos have been taken!")<br>
+					</code><p>Where count is the number of photos the user wishes to take.</p>
+					<h3>Take Videos</h3>
+					 <code>import os<br>
+						import sys<br>
+						from goprocam import GoProCamera, constants<br>
+						count = sys.argv[1]<br>
+						gp = GoProCamera.GoPro()<br>
+						gp.shoot_video(count)<br>
+						print(count + " seconds of video have been taken!")<br></code> 
+						This is used to take a video for how ever many seconds the user enters.
+					
+
+					<h3>Turn On / Off GoPro</h3>
+					 <code>import os<br>
+						import sys<br>
+						from goprocam import GoProCamera, constants<br>
+						gp = GoProCamera.GoPro()<br>
+						gp.power_on()<br>
+						print("Turning On")<br>
+						gp.power_off()<br>
+						print("Turning Off")<br>
+					</code> 
+
+					<h3>Downloading All Content / Deleting All Content</h3>
+					<code>import os<br>
+						import sys<br>
+						from goprocam import GoProCamera, constants<br>
+						gp = GoProCamera.GoPro()<br>
+						gp.downloadAll()<br>
+						print("Downloading All")<br>
+						gp.delete("all")<br>
+						print("Deleting All")<br>
+					</code>
+						
+					<h2 id="web">Web Interface</h2>
+					<h3>Running the Web Server</h3>
+					<p>I developed the web interface for the GoPro using Ajax, HTML and Flask. It allows the user to take photos and videos with the GoPro, turn it on or off and change it's resolution.</p>
+					<p>On the Raspberry Pi 3B, When you download the web interface from <a href="http://github.com/ryanstronge/goproweb">here</a>, open the downloaded folder in VS Code and execute the <strong>run.py </strong> file by clicking the green run buttton at the top right of Visual Studio Code.</p>
+					<p>You can also use the terminal by navigating to the directory where the run.py file is stored using the <strong>cd</strong> command and run the file by typing: <code>sudo -E python3 run.py</code></p>
+					
+					<h3>Accessing the Web Interface</h3>
+					<p>To find the hosted IP of the web interface, type into a terminal on the Raspberry Pi 3B the command <code>hostname -I</code>This will provide two IP addresses and you should use the first one.</p>
+					<p>Alternatively, you can use software such as <strong>Angry IP Scanner</strong> by opening the software and clicking the <strong>START</strong> button. This should find all devices on the network including one entitled <strong>raspberrypi</strong> which will have the IP to access the web interface beside it.</p>
+					<p>Input this first IP address into a web browser with <strong>:5000</strong> appended to the end of the IP, on any device connected to the same network in the form of <code>x.x.x.x:5000</code></p>
+					
+					<h3>Using the Web Interface</h3>
+					<p>Once you are able to see and access the web interface, there are a variety of features.</p>
+					<p><strong>Take Photos</strong> - Input the number of photos you wish to take using the GoPro and click the 'Take Photos' button.</p>
+					<p><strong>Take Video</strong> - Input the seconds of video you wish to take using the GoPro and click the 'Take Video' button.</p>
+					<p><strong>Turn On</strong> - Turns on the GoPro.</p>
+					<p><strong>Turn Off</strong> - Turns off the GoPro.</p>
+					<p><strong>Download All</strong> - Downloads all photos from the GoPro SD Card.</p>
+					<p><strong>Change Resolution</strong> - Choose between 4k, 2k, 1440p, 1080p, 960p, 720p or 480p and click the 'Change Resolution' button.</p>
+
+
+				</div></div>
+			</div>
+		
+				
+		</div>
+		
+
+
+    </body>
+</html>
