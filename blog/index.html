@@ -1,0 +1,108 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Robotic Arm Photogrammetry Project</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      		<div class="wrapAll clearfix">
+			<div class="sidebar">
+				<div class="logo">
+					<a href="/"><img src='img/logo.jpeg' alt="logo"></a>
+
+				</div>
+				
+			</div>
+			<div class="mainsection">
+				
+				
+				
+				<div class="article">
+					<h1>Remote Cameras (Blog)</h1>
+					<p class="siteSub">by Ryan Stronge (40264290)</p>
+					
+					<!-- <div class="articleRight">
+						<div class="articleRightInner">
+							<img src="img/pencil.jpg" alt="robotic arm" />
+						</div>
+						The robotic arm used for the project
+					</div> -->
+					<p> This project is part of my coursework for the Computer Science Challenges module (CSC1028).</p>
+					<p>This project is going to be used as an alternative to expensive IP Cameras used in factories in combination with Apple's ARKit3 to do object detection in order to improve productivity levels and do data analysis.</p>
+					<div class="contentsPanel">
+						<div class="contentsHeader">Contents</div>
+						<ul>
+							<li>
+								<span>1</span><a href="#">How-To Guide</a>
+								<ul>
+									<li><span>1.1</span><a href="#intro">Introduction</a> </li>
+									<li><span>1.2</span><a href="#arm">Robotic Arm</a> </li>
+									<li><span>1.3</span><a href="#how-to">How-To Guides</a></li>
+									<li><span>1.4</span><a href="#research">Research</a></li>
+									<li><span>1.5</span><a href="#interface">Creating the Web Interfaces</a></li>							
+									<li><span>1.6</span><a href="#ios">Creating iOS Apps</a></li>							
+									<li><span>1.7</span><a href="#github">GitHub Repository</a></li>							
+								</ul>
+							</li>
+						
+						</ul>
+					</div>
+					<h2 id="intro">Introduction</h2>
+					<p>The main problem is that the cameras currently used in factories are expensive 'IP Cameras' which have limited functionality, are hard to maintain and are very expensive. I'm trying to find an alternative to these which combat all of these problems.</p>
+					<p>The goal of this project is to find a sustainable, cheaper, less time consuming and more powerful alternative to expensive IP Cameras used in places such as factories which take a long time to install, develop and are difficult to maintain with a clunky user interface. So, I'm planning to research different alternatives, looking at GoPros, PiCameras and even Phones such as the iPhone 11 Pro and evaluate each to find which would be the best to find the best solution to this problem ranked by a number of factors such as the cost, ease to install, ease of maintenace and functionality.</p>
+					<p>With the cameras that I'm going to develop, I want them to have functionality in order to be able to do object detection and measure levels of productivity. One solution to this is using Apple's ARKit3 on the iPhone 11 Pros since all the processing can happen without human interaction and on the iPhones themselves.</p>
+					
+					<h2 id="arm">Robotic Arm</h2>
+					<p>This part isn't really relevant to this part of the project, however a few weeks ago, I was working on the robotic arm in the IoT lab of the CSB and trying to figure out how to use it when my plan was to do photogrammetry with the remote cameras. However, I felt that doing this part of the project would be much more beneficial to others such as companies and has alot more business potential than the photogrammetry part of the project as I feel like this is quite a niche in the industrial camera market. </p>
+					<p>You can find a guide on how to use the robotic arm in the how to guides part of this blog below, <a href="#how-to">here</a></p>
+				
+					<h2 id="how-to">How-To Guides</h2>
+					<h3>Robotic Arm How-To</h3>
+					<p>I created a how-to guide on how to use the robotic arm in the IoT lab of the CSB. I won't be using the robotic arm in this part of the project but I may reference it throughout this blog post, if you want to learn how to use the robotic arm, you can view the guide on my GitHub <a href="http://github.com/RyanStronge/CameraWeb" target="_blank">here</a>.</p>
+					<h3>GoPro / PiCamera How-To</h3>
+					<p>I also created a how-to guide on how to set up the GoPro and PiCamera which I'll be talking about later in this guide. I'll probably reference this guide alot in this blog so it can be found at my GitHub <a href="http://github.com/RyanStronge/CameraWeb" target="_blank">here</a>.</p>
+
+					<h2 id="research">Research of Cameras</h2>
+					<p>I researched and evaluated different types of cameras that I could use for this, although it was initially designed for the robotic arm, the research still applies to this part of the project.</p>
+					<h3>GoPro</h3>
+					<p>My initial thought was to use GoPro's because they're small, portable, easy to use and maintain, and well known / have a good reputation. However, they are quite expensive and don't have the best battery life, functionality or zoom compared to other cameras that I could use for the project. Since they were light and small, they would be easy to mount around somewhere like a factory or on a robotic arm (even a robotic arm in the factory!). Also, they'd be easy to create enclosures for to protect them from things such as dust or falling if there was a problem with them due to their portable size and design.</p>
+					<p>I did create a web interface for the GoPro that allows any user to easily take photos, videos, turn it on/off, download all photos and change it's resolution. This gives a very easy solution for any user with some technical knowledge to be able to set up the web server by following the how to guide and control the GoPro with a simple user interface. This creates a useful deliverable for other people in the world since it's all open-source and easy to use. The guide on how to do this is above in the how-to guides section above.</p>
+					<h3>PiCamera</h3>
+					<p>Another option that I had considered were using PiCameras connected to Pi Zeros. Although these are very cheap and portable due to their extremely small form factor, they are difficult to set up, hard to maintain, have a very bad resolution / framerate and can't zoom, making it not viable for this project. Due to their bad resolution and framerate for videos, they wouldn't be able to do object detection from a distance. Also, since they are an exposed circuit board, they'd be quite difficult to create custom enclosures for.</p>
+					<p>I also created a web interface for the PiCamera that allows the user to easily take photos and record videos with the PiCamera. I didn't feel the need to add much more functionality because I don't see the PiCameras as a viabe solution other than if a user / client is looking for an extremely affordable solution.</p>
+					<h3>iPhone</h3>
+					<p>I know the title of this probably sounds crazy, but one of my ideas and the idea I feel is by far the best is to use iPhones such as the iPhone X or iPhone 11. I could use these because the iPhones have a great battery life, have amazing cameras, amazing processing power and have APIs we can use to do things like object detection such as ARKit3. This would also make it much easier to install and maintain, making the installation process near-enough instant since you just have to download the app and set it up. The only downside of this that I can think of right now is that the iPhones are quite expensive. We would also be able to quite easily make an enclosure for this, however we may have challenges producing them at scale.</p>
+					<p>I feel like this is the best solution as it would work the best due to the fact that the camera is amazing and I would be able to do all the data analysis etc. on the iPhone itself.</p>
+					<h3>Conclusion</h3>
+					<p>In conclusion, I feel that the iPhone method will work best. However, all these methods will have a lasting impact in QUB as well as for software developers around the world that are looking for a simple web interface or API to use the GoPro and PiCamera that I'll explain below.</p>
+
+
+					<h2 id="interface">Creating the Web Interfaces</h2>
+					<h3>GoPro Web Interface</h3>
+					<p>I created a GoPro web interface so that any user could easily remotely control the GoPro using my how-to guide. If a user has any technical knowledge they'd be able to easily install everything needed for it. To createa the web interface, I used Flask with Ajax in HTML to call python scripts on the Raspberry Pi Zero that was connected to the GoPro via WiFi and connected to a Pi 3B which is the web server is run on. This creates alot of lasting value as it's very modular and open-source meaning other users and students in the future can improve upon it. The web interface includes functionality to take photos, videos, turn it on/off, download all photos / videos taken and change the resolution. I tried to implement livestreaming into the GoPro side of it, but couldn't work out how to in the end after hours upon hours of researching and trying different methods. I decied to give up because I felt my time would be more useful doing other parts of the future and produce more lasting impact.</p>
+					<h3>PiCamera Web Interface</h3>
+					<p>I also created a PiCamera web interface (on the same website as the GoPro one) so that any user could also easily remotely control the PiCamera as a more affordable solution to the GoPro, making it more available anad useuful to a greater number of students. Due to the low resolution and lower number of features of the PiCamera, I only added taking photos and videos to the web interface, however I implemented a live feed of the PiCamera into this part of the web interface. The code behind this part of the project is mostly the same as the GoPro part, except the PiCamera is directly connected to the Pi Zero using a serial cable.</p>
+					<h3>Validation</h3>
+					<p>I added validation to the web interface as well to make it easier to use and more user friendly for users that don't have much technical knowledge so that it provides error messages on screen such as if the GoPro / PiCamera is not connected or the WiFi network is incorrect etc. This creates even more of a lasting impact with this project.</p>
+					
+					<h2 id="ios">Creating iOS Apps</h2>
+					<h3>Evaluating Programming Languages</h3>
+					<p>I had to decide whether to develop my iOS app for the iPhone remote controlling using Objective-C or Swift. After researching using articles such as <a href="https://www.upwork.com/hiring/mobile/swift-vs-objective-c-a-look-at-ios-programming-languages/">this </a>and <a href="https://www.infoworld.com/article/2920333/swift-vs-objective-c-10-reasons-the-future-favors-swift.html">this</a>, I decided that Swift would be the best option because it's more modern, has better peformance and is easier to implement APIs that I may need such as ARKit 3. I need the best possible performance since I'm going to be doing alot of machine learning and object detection. Since it's an iOS app I'm making for this at this point, Swift would be the best to use since it's by Apple themselves and it's alot easier to learn than Objective-C.</p>
+					<p>To code in Swift, I had to download XCode which was very easy to install and use.</p>
+					<h3>Learning Swift</h3>
+					<p>To learn Swift, I used a number of different articles and YouTube videos that can be found here: </p>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/Ulp1Kimblg0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/09TeUXjzpKs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/aiXvvL1wNUc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/m0cuCmFjxx0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<p>I also used the <a href="https://swift.org/documentation/">swift documentation</a></p>
+			
+					<h2 id="github">GitHub Repository</h2>
+					<p>All the code that I have produced so far can be found in my GitHub repository that can be found <a href="https://github.com/RyanStronge/CameraWeb">here</a></p>
+					<p><br>The <strong>RemoteCam</strong> folder contains the GoPro and PiCamera web interfaces as well as the web server files. <br> The <strong>how-to-guide</strong> and <strong>how-to-guide gopro</strong> contains the robotic arm how-to webpage and the gopro web interface how-to guide respectively.</p>
+		</body>
+</html>
