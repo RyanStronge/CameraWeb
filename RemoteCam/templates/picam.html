@@ -27,14 +27,12 @@
             <div class="container__item">
 
                     <input type="text" class="form__field" placeholder="Number of Photos" value="" name="Pcount" id='Pcount'>       
-                    <input type="text" class="form__field" placeholder="Seconds of Video" value="" name="PcaptureLength" id='PcaptureLength'/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                     <button type="button" class="btn btn--primary btn--inside uppercase" id="PsubmitButton">Take Photos</button>
-                
-                    
-    
-                    <button type="button" class="btn btn--primary btn--inside uppercase" id="PtakeVideo">Take Video</button>
-                    
-                    <img src="{{ url_for('video_feed')}}"width='950px' height='450px' id="live">
+
+                    <input type="text" class="form__field" placeholder="Number of Photos" value="" name="PcaptureLength" id='PcaptureLength'>       
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="PtakeVideo">Take Videos</button>
+
+                    <button type="button" class="btn btn--primary btn--inside uppercase" id="pdl" name="pdl">Download</button>
 
                 </form>
             </div>
@@ -42,19 +40,7 @@
             
         </div>
         
-      
-
-        
-        
-        
-
-
-        
-
-
         <script type="text/javascript">
-
-                
                 $(function(){
                     $('#PsubmitButton').click(function(){
                         $.ajax({
@@ -79,6 +65,18 @@
                             success: alert("Recording for "+ $('#PcaptureLength').val() + "seconds!")
                         });
                     });
+
+                    $('#pdl').click(function(){
+                        $.ajax({
+                            url: '/download',
+                            data:{
+
+                            },
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: alert("Downloading...")
+                        });
+                    });
                 });
                     
 
@@ -86,6 +84,6 @@
                 
     
                
-            </script>
+        </script>
     </body>
 </html>

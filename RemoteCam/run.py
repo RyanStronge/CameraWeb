@@ -1,11 +1,26 @@
-from flask import Flask, render_template, redirect, url_for, request, Response, flash
+from flask import Flask, render_template, redirect, url_for, request, Response, flash, send_file, Response, after_this_request
 from flask import make_response
 from camera_pi import Camera
 from base_camera import BaseCamera
+import os
+import zipfile
+import io
+import pathlib
+import glob
+import time
+import requests
+import shutil
+import time
 
 app = Flask(__name__)
 import GoPro as gp
 import PiCam as p
+
+def sendFile(fileName): #input should be like img0.jpg
+    os.getcwd()
+    #path = os.getcwd+'/dls/'+fileName
+    return send_file(fileName, attachment_filename=fileName, as_attachment=True)
+
 
 @app.route('/')
 def index():
@@ -17,51 +32,79 @@ def index():
         else: return render_template('error.html', error="Check GoPro Connection!" )
     else: return render_template('error.html', error="Check Pi Zero Connection for SSH!")
 
-def gen(camera):
-    while True:
-        frame = camera.get_frame()
-        yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n'+ frame + b'\r\n')
 
 @app.route('/picam')
 def picam():
-    print("Running")
-    return render_template('picam.html')
+    p.connect("pi", "raspberrypizero.local", "raspberry")   
+    print(p.checkConnection())
+    if p.checkConnection():
+        return render_template('picam.html')
+    else:
+        return render_template('error.html', error="Check Pi Zero Connection for SSH!")
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(Camera()), 
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/stream')
-def stream():
+@app.route('/single')
+def single():
+    try:
+        os.system("rm "+os.getcwd()+"/dls/single/single.jpg")
+    except FileNotFoundError:
+        print("File not found.")
+    gp.connect("pi","raspberrypizero.local","raspberry")
     if gp.checkConnection():
-        quality = request.args.get('quality', type=str)
-        ip = "0.0.0.0:5000"
-        gp.stream(quality, ip) 
-        print("ok")   
-        return 'OK'
-    return flash("Connection Error")
+        print("connection ok")
+        gp.takeOne()
+        path = os.getcwd()
+        return send_file(path+"/dls/single/single.jpg", as_attachment=True, cache_timeout=0)
+    else:
+        return render_template('error.html', error="Check GoPro Connection!")
+
+@app.route('/pSingle')
+def pSingle():
+    p.connect("pi", "raspberrypizero.local","raspberry")
+    if p.checkConnection():
+        print("connection ok")
+        p.takeSingle()
+        path = os.getcwd()
+        return send_file(path+"/dls/single/img.jpg", as_attachment=True, cache_timeout=0)
+    else:
+        return render_template('error.html', error="Check PiCam Connection!")
+
+@app.after_request
+def add_header(r):
+    print("bye cache")
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
+    
+
+
+
+
+
 @app.route('/takePhotos')
 def takePhotos():
     if gp.checkConnection():
-        print(gp.checkConnection())
         count = request.args.get('count', type=int)
         gp.takePhotos(count)
-        flash("Taking "+count+" photos!")
         return 'OK'
     else:
-        print("connection errors")
-        flash("Connection Error!")
-        return 'Check Connection'
+        return render_template('error.html', error="Check GoPro Connection for SSH!")
 
 @app.route('/PtakePhotos')
 def PtakePhotos():
-    if gp.checkConnection():
-        count = request.args.get('Pcount', type=int)
+    print("taking photos run.py")
+    if p.checkConnection():
+        count = request.args.get('count', type=int)
         p.takePhotos(count)
         return 'OK'
-    return 'Connection Error'
+    else:
+        return render_template('error.html', error="Check PiCam Connection for SSH!")
 
 @app.route('/checkConnection')
 def checkConnection():
@@ -70,6 +113,8 @@ def checkConnection():
         return render_template('error.html')
     else:
         return 'ok'
+
+
 
 
 @app.route('/turnon')
@@ -83,10 +128,20 @@ def turnOff():
     return 'OK'
 
 @app.route('/downloadAll')
-def downloadAll():
+def downloadAll(): 
     gp.downloadAll()
-    return 'OK'
-
+    dls = str(os.getcwd())+"/dls/data.zip"
+    baseDir = os.getcwd()
+    print(dls)
+    result = send_file(dls, as_attachment=True)
+    try:
+        shutil.rmtree(os.getcwd()+'/dls')
+        os.system("cd "+baseDir+"; mkdir dls")
+    except Exception as error:
+        print("Error deleting files")
+        print(error) 
+    print("returning file.")
+    return result
 
 @app.route('/connect')
 def connect():
@@ -106,12 +161,13 @@ def record():
 
 @app.route('/Precord')
 def Precord():
-    if gp.checkConnection():
-        length = request.args.get('PcaptureLength', type=int)
+    if p.checkConnection():
+        print("route")
+        length = request.args.get('captureLength', type=int)
         print("length: "+str(length))
         p.takeVideos(str(length))
         return 'OK'
-    return 'Connection Error'
+    return render_template('error.html', error="Connection error!")
 
 @app.route('/res')
 def res():
@@ -125,5 +181,8 @@ def res():
         return 'OK'
             
 if __name__ == "__main__":
+    print(os.getuid())
+    os.setuid(1000)
+    print(os.getuid())
     app.secret_key = 'w77pebv6'
     app.run(debug=True, host='0.0.0.0')

@@ -89,16 +89,23 @@ a {
   margin-right: 30%;
 }
 
-#PsubmitButton, #Pcount{
+#PsubmitButton{
   width: 40%;
   margin-left: 30%;
+  margin-top: 5%;
 
   display: inline-block;
+}
+
+#Pcount{
+  width: 40%;
+  top: 200px;
 }
 
 #PtakeVideo, #PcaptureLength{
   width: 40%;
   margin-right: 30%;
+  margin-top: 10%;
   display: inline-block;
 }
 

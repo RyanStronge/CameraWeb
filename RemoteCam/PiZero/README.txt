@@ -1,0 +1,1 @@
+These two folders should be placed on the Pi Zero at ~/

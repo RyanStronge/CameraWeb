@@ -50,8 +50,8 @@
                 
                         <button type="button" class="btn btn--primary btn--inside uppercase" id="turnon">Turn GoPro On</button>
              
-                        <button type="button" class="btn btn--primary btn--inside uppercase" id="downloadAll">Download All</button>
-                    </div>
+                        <a href="/downloadAll"><button type="button" class="btn btn--primary btn--inside uppercase">Download All</button></a>
+                        </div>
                     
                     <br><br>
 
@@ -101,7 +101,8 @@
                                 count: $('#count').val(),
                             },
                             dataType: 'JSON',
-                            type: 'GET'
+                            type: 'GET',
+                            success: alert("Taking " + $('#count').val() + " images!")
                         });
                     }
                     else{
@@ -116,6 +117,7 @@
                             url: '/picam',
                             dataType: 'JSON',
                             type: 'GET',
+                            success: alert("PiCam....")
                         });
                     });
 
@@ -128,7 +130,7 @@
                             },
                             dataType: 'JSON',
                             type: 'GET',
-                            success: alert("Recording for "+ $('#captureLength').val() + "seconds!")
+                            success: alert("Recording for "+ $('#captureLength').val() + " seconds!")
                         });
                         }
                         else{

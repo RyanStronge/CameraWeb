@@ -1,18 +1,10 @@
 import os
 import pyautogui as wr
 import paramiko as pm
+import subprocess
+import random
 
 client = pm.SSHClient()
-
-""" def turnOn():
-    if checkConnection():
-        command = 'cd /boot; pwd; sudo -E python3 turnOn.py'
-        print(command)
-        client.exec_command(command)
-        print("Running")
-    else:
-        print("Please Connect First!") """
-
 
 def connect(user, host, password):
     try:
@@ -28,25 +20,44 @@ def checkConnection():
     if client.get_transport() is not None:
         print("Connected.")
         return True
-    print("Check GoPro Conection! Current WiFi network is: ")
-    stdout = client.exec_command('iwgetid')
-    print(stdout)
-    return False
-
+    else:
+        return False
+        
 def takePhotos(count):
+    print("taking photos "+str(count))
     if checkConnection():
-        command = 'cd /boot; pwd; sudo -E python3 PtakePhotos.py '+str(count)
-        print(command)
-        client.exec_command(command)
-        print("Running")
+        for x in range(0, count):
+            client.exec_command('cd ~/Downloads/; sudo -E python3 startup.py')
+            name = "img"+str(x)
+            print(name)
+            path = os.getcwd()
+            print(path)
+            os.system('sshpass -p \'raspberry\' scp raspberrypizero.local:~/Downloads/img.jpg '+path+'/dls/'+name+'.jpg')
+            client.exec_command("rm img.jpg")
+            print("Running")
     else:
         print("Connect First!")
 
+def takeSingle():
+    path = os.getcwd()
+    try:
+        os.system("rm "+path+"/dls/single/img.jpg")
+    except FileNotFoundError:
+        print("File not found.")
+    client.exec_command('cd ~/Downloads/; sudo -E python3 startup.py')
+    print(path)
+    os.system('sshpass -p \'raspberry\' scp raspberrypizero.local:~/Downloads/img.jpg '+path+'/dls/single/img.jpg')
+    client.exec_command("rm ~/Downloads/img.jpg")
+
 def takeVideos(length):
     if checkConnection():
-        command = 'cd /boot; pwd; sudo -E python3 PtakeVideos.py '+str(length)
-        print(command)
-        client.exec_command(command)
+        num = random.randint(0, 9999)
+        name = "video"+str(num)+".h264"
+        path = os.getcwd()
+        print(path)
+        client.exec_command('cd ~/Downloads; raspivid -o '+name+' -t '+(str(length)*1000))
+        os.system('sshpass -p \'raspberry\' scp raspberrypizero.local:/home/pi/Downloads/video.h264 '+str(path)+'/dls/video'+str(num)+'.h264')
+        client.exec_command('rm video.h264')
         print("Running")
     else:
         print("Connect First!")

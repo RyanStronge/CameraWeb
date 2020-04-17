@@ -2,6 +2,8 @@ import os
 import pyautogui as wr
 import paramiko as pm
 import time
+import shutil
+import random as r
 
 client = pm.SSHClient()
 
@@ -22,6 +24,17 @@ def checkConnection():
         return True
     else:
         return False
+
+def make_archive(source, destination):
+        base = os.path.basename(destination)
+        name = base.split('.')[0]
+        format = base.split('.')[1]
+        archive_from = os.path.dirname(source)
+        archive_to = os.path.basename(source.strip(os.sep))
+        print(source, destination, archive_from, archive_to)
+        shutil.make_archive(name, format, archive_from, archive_to)
+        shutil.move('%s.%s'%(name,format), destination)
+
 
 def checkGPConnection():
         print("connection ok")
@@ -64,28 +77,38 @@ def stream(quality, ip):
         print("Please Connect First!")
 
 def takePhotos(captureCount):
-    if checkConnection():
-        stdin, stdout, stderr = client.exec_command('cd /boot; pwd; sudo -E python3 piGoPro.py '+str(captureCount))
-        print("Running")
-    else:
-        print("Please Connect First!")
+    print(captureCount)
+    for x in range(0, captureCount):
+        client.exec_command('cd ~/gpDownloads; sudo -E python3 piGoPro.py')
+        name = "gpImg"+str(x)
+        print(name)
+        path = os.getcwd()
+        os.system('sshpass -p \'raspberry\' scp raspberrypizero.local:~/gpDownloads/img.jpg '+path+'/dls/'+name+'.jpg') 
+        client.exec_command("cd ~/gpDownloads; rm img.jpg")
+        print("Running GP Image")   
+
+def takeOne():
+    client.exec_command('cd ~/gpDownloads; sudo -E python3 single.py')
+    path = os.getcwd()
+    os.system('sshpass -p \'raspberry\' scp raspberrypizero.local:~/gpDownloads/single.jpg '+path+'/dls/single/single.jpg')
+    client.exec_command('rm ~/gpDownloads/single.jpg') 
+
 
 def record(captureLength):
-    if checkConnection():
-        command = 'cd /boot; pwd; sudo -E python3 record.py '+str(captureLength)
-        print(command)
-        client.exec_command(command)
-        print("Running")
-    else:
-        print("Please Connect First!")
+    command = 'cd ~/gpDownloads; pwd; sudo -E python3 record.py '+str(captureLength)
+    print(command)
+    client.exec_command(command)
+    vName = "video"+ str(r.randint(0, 9999))
+    print(vName)
+    vPath = os.getcwd()
+    os.system('sshpass -p \'raspberry\' scp raspberrypizero.local:~/gpDownloads/video.mp4 '+vPath+'/dls/'+vName+'.mp4') 
+    client.exec_command("cd ~/gpDownloads; rm video.mp4")
+    print("Running GP Video")
 
 def downloadAll():
-    if checkConnection():
-        command = 'cd /boot; pwd; sudo -E python3 downloadAll.py'
-        client.exec_command(command)
-        print("Running")
-    else:
-        print("Please Connect First!")
+    dls = str(os.getcwd())+"/dls"
+    print(dls)
+    make_archive(dls, dls+'/data.zip')
 
 def changeResolution(choice):
     if checkConnection():
@@ -94,19 +117,4 @@ def changeResolution(choice):
         client.exec_command(command)
         print("Running")
     else:
-        print("Please Connect First!")
-
-
-
-
-    
-
-    
-
-
-    
-
-        
-    
-
- 
+        print("Please Connect First!") 
